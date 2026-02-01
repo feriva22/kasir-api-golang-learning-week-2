@@ -51,6 +51,10 @@ func main() {
   http.HandleFunc("/api/produk", productHandler.HandleProducts)
   http.HandleFunc("/api/produk/", productHandler.HandleProductByID)
   
+  http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprint(w, "OK")
+  })
+  
   
   err = http.ListenAndServe(addr, nil)
   if err != nil {
