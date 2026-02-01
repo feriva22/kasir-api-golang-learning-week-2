@@ -51,6 +51,14 @@ func main() {
   http.HandleFunc("/api/produk", productHandler.HandleProducts)
   http.HandleFunc("/api/produk/", productHandler.HandleProductByID)
   
+  categoryRepo := repositories.NewCategoryRepository(db)
+  categoryService := services.NewCategoryService(categoryRepo)
+  categoryHandler := handlers.NewCategoryHandler(categoryService)
+  
+  // Setup routes
+  http.HandleFunc("/categories", categoryHandler.HandleCategories)
+  http.HandleFunc("/categories/", categoryHandler.HandleCategoryByID)
+  
   http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
     fmt.Fprint(w, "OK")
   })
